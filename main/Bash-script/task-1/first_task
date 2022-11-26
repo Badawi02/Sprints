@@ -1,0 +1,47 @@
+#! /bin/bash
+
+if [ -d ~/reports ]
+then
+	cd ~/reports/
+	year=`date +%Y`
+	mon=`date +%m`
+	day=`date +%d`
+	mkdir $year
+	mkdir $year/$mon
+	touch $year/$mon/$day.xls
+	echo 'make report successfuly'
+	
+else
+	cd ~
+	mkdir ~/reports
+	cd ~/reports/
+	year=`date +%Y`
+	mon=`date +%m`
+	day=`date +%d`
+	mkdir $year
+	mkdir $year/$mon
+	touch $year/$mon/$day.xls
+	echo 'make report successfuly'
+fi
+ 
+hour=`date +%H`
+if [ $hour -ge 12 ] & [ $hour -le 24 ]
+then
+	echo 'Do you want backup ? (yes/no)'
+	read re
+	if [ $re = 'yes' ]
+	then
+		if [ -d ~/backups ]
+		then
+			cp ~/reports/$year/$mon/$day.xls ~/backups
+			echo make backup successfuly
+		else
+			cd ~
+			mkdir ~/backups
+			cp ~/reports/$year/$mon/$day.xls ~/backups
+			echo make backup successfuly
+		fi
+	else [ $re = 'no' ]
+		echo OK
+	fi
+fi

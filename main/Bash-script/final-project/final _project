@@ -1,0 +1,459 @@
+#! /bin/bash
+
+user=`whoami`
+check_root () {
+	if [ $user != 'root' ]
+  	then 
+  		echo "Please run as a root or have root privilags"
+		exit  		
+	fi
+}
+
+check_root
+
+
+
+
+
+change_ssh () {
+
+	echo "Do you want change port number? (y/n)"
+	read re
+	if [ $re = 'y' ]
+	then
+		echo what Port number you want ?
+		read numbers
+		number=$numbers
+		sudo sed -i "s/#Port 22/Port $number/" /etc/ssh/sshd_config
+		echo "change port number successfuly port=$number"
+	elif [ $re = 'n' ]
+	then
+		echo OK
+	else
+		echo invailed option
+	fi
+}
+
+change_ssh
+
+
+
+
+
+
+
+
+change_rootlogin () {
+
+	echo "Do you want disable PermitRootLogin ? (y/n)"
+	read rep
+	if [ $rep = 'y' ]
+	then
+		sudo sed -i 's/#PermitRootLogin yes/PermitRootLogin no/' /etc/ssh/sshd_config
+		echo "change PermitRootLogin successfuly , PermitRootLogin=no"
+	elif [ $rep = 'n' ]
+	then
+		echo OK
+	else
+		echo invailed option
+	fi
+}
+
+change_rootlogin
+
+
+
+
+
+
+
+change_selinux_firewall () {
+
+	echo "Do you want disabled selinux ? (y/n)"
+	read rep
+	if [ $rep = 'y' ]
+	then
+		sudo sed -i 's/SELINUX=enforcing/SELINUX=disabled/' /etc/selinux/config
+		echo "change SELINUX successfuly , SELINUX=disabled"
+		setenforce 0
+	elif [ $rep = 'n' ]
+	then
+		echo OK
+	else
+		echo invailed option
+	fi
+
+
+	echo "Do you want change firewall ? (y/n)"
+	read repo
+	if [ $repo = 'y' ]
+	then
+		systemctl enable firewalld
+		systemctl start firewalld
+		firewall-cmd --add-port=$number/tcp --permamemt
+		firewall-cmd --remove-service=ssh --permanent
+		dnf install policycoreutils-python-utils
+		semanage port -a -t ssh_port_t -p tcp $number
+		echo "change firewalld successfuly"
+	elif [ $repo = 'n' ]
+	then
+		echo OK
+	else
+		echo invailed option
+	fi
+}
+
+change_selinux_firewall
+
+
+
+
+
+
+
+add_group () {
+	echo 'Do you want add new groub ? (y/n)'
+	read reply
+	if [ $reply = 'y' ]
+	then
+		echo what groupname you want ?
+		read groupnames
+		groupname=$groupnames
+		echo 'what id you want ?'
+		read groupid
+		sudo groupadd -g $groupid $groupname
+		echo "group $groupname created successfully" 
+		
+	elif [ $reply = 'n' ]
+	then
+		echo ok
+	else 
+		echo invalid option
+	fi
+	
+}
+add_group
+
+
+
+
+
+
+
+
+
+
+add_user () {
+	
+	echo 'Do you want add new user ? (y/n)'
+	read reply
+	if [ $reply = 'y' ]
+	then
+		echo what username you want ?
+		read username
+		sudo useradd -m $username
+		echo "user $username created successfully" 
+
+
+		echo "Do you want password for $username ?? (y/n)"
+		read tell
+		if [ $tell = 'y' ]
+		then
+			sudo passwd $username
+		elif [ $tell = 'n' ]
+		then
+			echo ok
+		else 
+			echo invalid option
+		fi
+
+
+
+		echo "Do you want add $username to groub ($groupname) as a primary group?? (y/n)"
+		read telly
+		if [ $telly = 'y' ]
+		then
+			sudo usermod -g $groupname $username
+			echo "group $groupname make a primry group to $username"
+
+		elif [ $telly = 'n' ]
+		then
+			echo ok
+		else 
+			echo invalid option
+		fi
+
+
+
+		echo "Do you want add $username to sudoers file ?? (y/n)"
+		read tel
+		if [ $tel = 'y' ]
+		then
+			sudo usermod -aG wheel $username
+		elif [ $tel = 'n' ]
+		then
+			echo ok
+		else 
+			echo invalid option
+		fi
+						
+	elif [ $reply = 'n' ]
+	then
+		echo ok
+	else 
+		echo invalid option
+	fi
+}
+
+
+add_user
+
+
+
+
+
+
+
+
+
+make_reports (){
+
+	echo 'Do you want make reports for 2021 ? (y/n)'
+	read replye
+	if [ $replye = 'y' ]
+	then
+
+		if [ -d ~/reports ]
+		then
+			cd ~/reports/
+			touch 2021-{1..12}-{1..31}.xls
+			echo 'make reports successfuly'
+		
+		else
+			cd ~
+			mkdir ~/reports
+			cd ~/reports/
+			touch 2021-{1..12}-{1..31}.xls
+			echo 'make reports successfuly'
+		fi
+	elif [ $replye = 'n' ]
+	then
+		echo ok
+	else 
+		echo invalid option
+	fi
+
+}
+
+make_reports
+
+
+
+
+
+
+
+
+permissions_reports (){
+
+	echo 'Do you want make permissions reports for 2021 ? (y/n)'
+	read replye
+	if [ $replye = 'y' ]
+	then
+		
+		cd ~
+		chmod 660 reports
+		echo change permissions successfully
+
+	elif [ $replye = 'n' ]
+	then
+		echo ok
+	else 
+		echo invalid option
+	fi
+
+}
+
+
+permissions_reports
+
+
+
+
+
+
+
+
+
+
+
+update_upgrade (){
+
+	echo 'Do you want make update and upgrade to your system ? (y/n)'
+	read replye
+	if [ $replye = 'y' ]
+	then
+		
+		sudo yum -y update
+		sudo yum -y upgrade
+
+	elif [ $replye = 'n' ]
+	then
+		echo ok
+	else 
+		echo invalid option
+	fi
+
+}
+
+
+update_upgrade
+
+
+
+
+
+
+
+
+
+enable_epel (){
+
+	echo 'Do you want make update and upgrade to your system ? (y/n)'
+	read replye
+	if [ $replye = 'y' ]
+	then
+		
+		sudo yum install epel-release
+
+	elif [ $replye = 'n' ]
+	then
+		echo ok
+	else 
+		echo invalid option
+	fi
+
+}
+
+
+enable_epel
+
+
+
+
+
+
+
+
+
+install_fail2ban (){
+
+	echo 'Do you want make update and upgrade to your system ? (y/n)'
+	read replye
+	if [ $replye = 'y' ]
+	then
+		
+		sudo yum install epel-release
+		sudo yum install fail2ban
+		sudo systemctl start fail2ban
+		sudo systemctl enable fail2ban
+		
+
+	elif [ $replye = 'n' ]
+	then
+		echo ok
+	else 
+		echo invalid option
+	fi
+
+}
+
+
+install_fail2ban
+
+
+
+
+
+
+backup_reports () {
+	
+	echo "Do you want make backup for directroy reports ? (y/n)"
+	read te
+	if [ $te = 'y' ]
+	then
+		echo "what user want to creat crontab to him ?"
+		read yourname
+		if id "$yourname" &>/dev/null; then
+			mkdir /home/$yourname/backups
+			echo "00 1 * * 1-4 tar -zcf /home/$yourname/backups/reports-$(date +%W)-$(date +%u).tar.gz /home/$yourname/reports" > "/home/$yourname/rbackup,txt"
+			sudo crontab "/home/$yourname/rbackup,txt"
+		else
+			echo 'user not found'
+		fi
+	elif [ $te = 'n' ]
+	then 
+		echo OK
+	else
+		echo invalid option
+	fi					
+}
+
+backup_reports
+
+
+
+
+
+
+add_new_user () {
+	
+	echo 'Do you want add new user (manager) with id=30000 ? (y/n)'
+	read reply
+	if [ $reply = 'y' ]
+	then
+		sudo useradd -m -u 30000 manager
+		echo "user manager created successfully" 
+						
+	elif [ $reply = 'n' ]
+	then
+		echo ok
+	else 
+		echo invalid option
+	fi
+}
+
+
+add_new_user
+
+
+
+
+
+	
+backup_home_manger () {
+	
+	echo "Do you want make backup for directroy reports for manager ? (y/n)"
+	read te
+	if [ $te = 'y' ]
+	then
+			mkdir /home/manager/audit
+			echo "00 2 * * 1-4 sync /home/manager/reports /home/manager/audit/reports" > "/home/manager/sync,txt"
+			sudo crontab "/home/manager/sync,txt"
+
+	elif [ $te = 'n' ]
+	then 
+		echo OK
+	else
+		echo invalid option
+	fi					
+}
+
+backup_home_manger
+
+
+
+
+
+
+

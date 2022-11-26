@@ -1,0 +1,151 @@
+#! /bin/bash
+
+user=`whoami`
+check_root () {
+	if [ $user != 'root' ]
+  	then 
+  		echo "Please run as a root"
+		exit  		
+	fi
+}
+
+check_root
+
+
+
+
+
+
+
+change_ssh () {
+
+	echo "Do you want change port number? (y/n)"
+	read re
+	if [ $re = 'y' ]
+	then
+		echo what Port number you want ?
+		read numbers
+		number=$numbers
+		sudo sed -i "s/#Port 22/Port $number/" /etc/ssh/sshd_config
+		echo "change port number successfuly port=$number"
+	elif [ $re = 'n' ]
+	then
+		echo OK
+	else
+		echo invailed option
+	fi
+}
+
+change_ssh
+
+
+
+
+
+
+
+change_rootlogin () {
+
+	echo "Do you want disable PermitRootLogin ? (y/n)"
+	read rep
+	if [ $rep = 'y' ]
+	then
+		sudo sed -i 's/#PermitRootLogin yes/PermitRootLogin no/' /etc/ssh/sshd_config
+		echo "change PermitRootLogin successfuly , PermitRootLogin=no"
+	elif [ $rep = 'n' ]
+	then
+		echo OK
+	else
+		echo invailed option
+	fi
+}
+
+change_rootlogin
+
+
+
+
+
+
+
+add_user () {
+	
+	echo 'Do you want add new user ? (y/n)'
+	read reply
+	if [ $reply = 'y' ]
+	then
+		echo 'what username you want?'
+		read username
+		sudo useradd $username
+		echo "user $username created successfully"
+
+
+		echo "Do you want password for $username ?? (y/n)"
+		read tell
+		if [ $tell = 'y' ]
+		then
+			sudo passwd $username
+		elif [ $tell = 'n' ]
+		then
+			echo ok
+		else 
+			echo invalid option
+		fi
+
+		echo "Do you want add $username to sudoers file ?? (y/n)"
+		read tel
+		if [ $tel = 'y' ]
+		then
+			sudo usermod -aG wheel $username
+		elif [ $tel = 'n' ]
+		then
+			echo ok
+		else 
+			echo invalid option
+		fi
+						
+	elif [ $reply = 'n' ]
+	then
+		echo ok
+	else 
+		echo invalid option
+	fi
+}
+
+
+add_user
+
+
+
+
+
+
+backup_reports () {
+	
+	echo "Do you want make backup for directroy reports ? (y/n)"
+	read te
+	if [ $te = 'y' ]
+	then
+		echo "what user want to creat crontab to him ?"
+		read yourname
+		if id "$yourname" &>/dev/null; then
+			mkdir /home/$yourname/backups
+			echo "* * * * * tar -zcf /var/backups/home.tgz /home/$yourname" > "/home/$yourname/backups/rbackup,txt"
+			sudo crontab "/home/$yourname/backups/rbackup,txt"
+		else
+			echo 'user not found'
+		fi
+	elif [ $te = 'n' ]
+	then 
+		echo OK
+	else
+		echo invalid option
+	fi					
+}
+
+backup_reports
+
+
+
+
+
