@@ -1,0 +1,162 @@
+/*
+    Home.html
+*/
+
+.reading_undraw_background{
+  padding-top: 1.5%;
+}
+
+.sign_up_forms_container{
+  padding-top: 5%;
+
+}
+
+.reading_undraw_background{
+  margin-left: 5%;
+
+}
+
+.sign_up_forms_element{
+  padding-bottom: 10px;
+  margin-left: 28%;
+  width: 75% !important;
+}
+
+/*
+  Books.html
+*/
+
+.center_search_bar{
+  width: 60% !important;
+  border-radius: 25px !important;
+
+}
+
+.book_view_logout_button{
+  border-radius: 5px !important;
+  border-style: none !important;
+  color: #FFFFFF !important;
+  background-color: #4259C1 !important;
+}
+
+.username_book_navbar{
+  padding-top: 5px;
+  color: #000000;
+}
+
+/*
+Admin.html
+*/
+
+.admin_login_container{
+  margin-top: 15%;
+  border-radius: 15px;
+  background-color: white;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
+}
+
+.fa-bolt{
+  color: #DB2F6A;
+}
+
+.admin_login_title{
+  margin-top: 10px;
+  margin-bottom: 20px;
+  color: #2F2C90;
+  font-family: 'Julius Sans One', sans-serif;
+}
+
+.admin_login_submit_button{
+  width: 50%;
+  background-color: #6D6EC7 ;
+  color: white;
+  border-style: none;
+  border-radius: 8px !important;
+  margin-bottom: 10px;
+  font-family: 'Open Sans', sans-serif;
+  transition: background-color 0.9s ease-out;
+}
+
+.admin_login_submit_button:hover{
+  background-color: #3735A2;
+}
+
+.admin_login_submit_button:hover .font_awesome_check_circle{
+  color: white;
+}
+
+.font_awesome_check_circle{
+  color: #6D6EC7;
+  transition: color 0.5s ease;
+}
+
+.admin_login_form_row{
+  padding-bottom: 20px;
+}
+
+.admin_login_email_form:focus,
+.admin_login_password_form:focus{
+  outline: 0 none !important;
+  box-shadow: 0 0 5px rgba(98, 101, 228, 1) !important;
+}
+
+/*
+  AdminHome.html
+*/
+
+.fa-user-cog{
+  color: #D23E91;
+}
+
+.nav-item a{
+  color: #2F2C90;
+}
+
+.nav-item  a:focus{
+  color: #FFFFFF !important;
+  font-family: 'Open Sans', sans-serif;
+}
+
+
+ .nav-item .active
+ {
+    color: #FFFFFF;
+    background-color: #210F41 !important;
+    font-family: 'Open Sans', sans-serif;
+
+}
+
+.categories_add_button{
+  width: 10%;
+  background-color: #6D6EC7 ;
+  color: white;
+  border-style: none;
+  border-radius: 8px !important;
+  margin-bottom: 10px;
+  font-family: 'Open Sans', sans-serif;
+  transition: background-color 0.9s ease-out;
+}
+
+.categories_add_button:hover{
+  background-color: #3735A2;
+
+}
+
+.fa-plus-circle{
+  font-size: 30px;
+}
+
+.category_fa_icon{
+  font-size: 25px;
+}
+
+.actions_buttons_table_edit{
+  background-color: #210F41 !important;
+  border-style: none !important;
+}
+
+.actions_buttons_table_delete{
+  background-color: #D64154 !important;
+  border-style: none !important;
+
+}

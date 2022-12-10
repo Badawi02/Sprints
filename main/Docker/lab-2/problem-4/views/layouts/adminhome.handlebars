@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="stylesheets/style.css">
+
+  <!--bootstrap Libraries-->
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
+  </script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
+  </script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+    integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous">
+  </script>
+  <!--Font Awesome-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js"></script>
+  <!--Google Fonts-->
+  <link href="https://fonts.googleapis.com/css2?family=Julius+Sans+One&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+  <title>Admin</title>
+
+</head>
+
+<body>
+  <div class="container-fluid">
+    <div class="row text-center">
+      <div class="col-1"></div>
+
+      <div class="col-10">
+        <h2 class="admin_login_title"><i class="fas fa-user-cog"></i> Admin Panel</h2>
+
+        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+          <li class="nav-item">
+            <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab"
+              aria-controls="pills-home" aria-selected="true">
+              <i class="fas fa-list-ul"></i> Categories</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab"
+              aria-controls="pills-profile" aria-selected="false">
+              <i class="fas fa-book"></i> Books</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab"
+              aria-controls="pills-contact" aria-selected="false">
+              <i class="fas fa-feather"></i> Authors</a>
+          </li>
+        </ul>
+
+        <div class="tab-content" id="pills-tabContent">
+         
+          <!--Categories-->
+          <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+            <button type="button" class="btn categories_add_button" data-toggle="modal" data-target="#exampleModal"
+              data-whatever="@mdo">
+              <i class="fas fa-plus-circle"></i>
+            </button>
+
+            <div class="modal fade text-center" id="exampleModal" tabindex="-1" role="dialog"
+              aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add Category</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <form method="POST" action="/admin/categories">
+                  <div class="modal-body">
+                      <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">
+                          <i class="far fa-list-alt category_fa_icon"></i>
+                        </label>
+                        <input type="text" class="form-control" id="recipient-name" placeholder="Category name" name="category">
+                      </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                      <i class="far fa-times-circle category_fa_icon"></i>
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                      <i class="far fa-check-circle category_fa_icon"></i>
+                    </button>
+                  </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+
+            <!--Categories Table-->
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th scope="col">Name</th>
+                  <th scope="col">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {{#if categories}}
+                      {{#each categories}}
+                        <tr>
+                          <td>{{this.category}}</td>
+                          <td>
+                            <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                                <button type="button" class="btn btn-primary categories_add_button" data-toggle="modal" data-target="#exampleModal{{this._id}}"
+                                  data-whatever="@mdo">
+                                  <i class="fas fa-edit "></i>
+                                </button>
+
+                                <div class="modal fade text-center" id="exampleModal{{this._id}}" tabindex="-1" role="dialog"
+                                  aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                  <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                      <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Edit Category</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                          <span aria-hidden="true">&times;</span>
+                                        </button>
+                                      </div>
+                                        <form method="POST" action="/admin/categories/{{this._id}}" class="d-inline">
+                                            <div class="modal-body">
+                                                <div class="form-group">
+                                                  <label for="recipient-name" class="col-form-label">
+                                                    <i class="far fa-list-alt category_fa_icon"></i>
+                                                  </label>
+                                                  <input type="text" class="form-control" id="recipient-name" placeholder="Category name" name="category" value="{{this.category}}">
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                              <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                                <i class="far fa-times-circle category_fa_icon"></i>
+                                              </button>
+                                              <button type="submit" class="btn btn-primary">
+                                                <i class="far fa-check-circle category_fa_icon"></i>
+                                              </button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                  </div>
+                                </div>
+                            <form method="GET" action="/admin/categories/{{this._id}}" class="d-inline">
+                              <button type="submit" class="btn btn-danger actions_buttons_table_delete">
+                                <i class="far fa-trash-alt "></i>
+                              </button>
+                            </form>
+                          </td>
+                        </tr>
+                      {{/each}}
+                {{/if}}
+              </tbody>
+            </table>
+
+          </div>
+
+
+          <!-- Books -->
+          <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+            <div class="tab-pane fade show active" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+              <button type="button" class="btn categories_add_button" data-toggle="modal" data-target="#exampleModal3"
+                data-whatever="@mdo">
+                <i class="fas fa-plus-circle"></i>
+              </button>
+
+              <div class="modal fade text-center" id="exampleModal3" tabindex="-2" role="dialog"
+                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel2">Add Book</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <form method="POST" action="/admin/books" enctype="multipart/form-data">
+                      <div class="modal-body">
+                          <div class="form-group">
+                            <label for="recipient-name" class="col-form-label">
+                              <i class="fas fa-book"></i>
+                            </label>
+                            <input type="text" class="form-control" id="recipient-name" placeholder="Book name" name="name" required>
+                            <div class="form-group">
+                              <label for="exampleFormControlSelect1">Category</label>
+                              <select class="form-control text-center" id="exampleFormControlSelect1" name="category">
+                                {{#if categories}}
+                                  {{#each categories}}
+                                    <option value="{{this._id}}">{{this.category}}</option>
+                                  {{/each}}
+                                {{/if}}     
+                              </select>
+                            </div>
+
+                            <div class="form-group">
+                              <label for="exampleFormControlSelect1">Author</label>
+                              <select class="form-control text-center" id="exampleFormControlSelect1" name="user">
+                                {{#if authors}}
+                                  {{#each authors}}
+                                    <option value="{{this._id}}">{{this.author}}</option>
+                                  {{/each}}
+                                {{/if}}  
+                              </select>
+                            </div>
+
+                            <div class="custom-file">
+                              <input type="file" class="custom-file-input" id="cover" name="cover" required>
+                              <label class="custom-file-label" for="cover">Choose Image</label>
+                            </div>
+
+
+
+                          </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                          <i class="far fa-times-circle category_fa_icon"></i>
+                        </button>
+                        <button type="submit" class="btn btn-primary">
+                          <i class="far fa-check-circle category_fa_icon"></i>
+                        </button>
+                      </div>
+
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!--Books Table-->
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th scope="col">Photo</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Category ID</th>
+                  <th scope="col">Author ID</th>
+                  <th scope="col">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {{#if books}}
+                  {{#each books}}
+                    <tr>
+                      <td><img src="../uploads/{{this.cover}}" alt="{{this.cover}}" style="width: auto; height: 100px;"></td>
+                      <td>{{this.name}}</td>
+                      <td>{{this.category.category}}</td>
+                      <td>{{this.user.author}}</td>
+                      <td>
+                        <div class="tab-pane fade show active" id="pills-profile" role="tabpanel"
+                          aria-labelledby="pills-profile-tab">
+                          <button type="button" class="btn btn-primary categories_add_button" data-toggle="modal" data-target="#exampleModal{{this._id}}"
+                            data-whatever="@mdo">
+                            <i class="fas fa-edit "></i>
+                          </button>
+
+                          <div class="modal fade text-center" id="exampleModal{{this._id}}" tabindex="-2" role="dialog"
+                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h5 class="modal-title" id="exampleModalLabel2">Edit Book</h5>
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                  </button>
+                                </div>
+                                <form method="POST" action="/admin/books/{{this._id}}" enctype="multipart/form-data"  class="d-inline">
+                                  <div class="modal-body">
+                                      <div class="form-group">
+                                        <label for="recipient-name" class="col-form-label">
+                                          <i class="fas fa-book"></i>
+                                        </label>
+                                        <input type="text" class="form-control" id="recipient-name" placeholder="Book name" name="name" value="{{this.name}}">
+                                        <div class="form-group">
+                                          <label for="exampleFormControlSelect1">Category</label>
+                                          <select class="form-control text-center" id="exampleFormControlSelect1" name="category">
+                                            {{#if ../categories}}
+                                              {{#each ../categories}}
+                                                <option value="{{this._id}}">{{this.category}}</option>
+                                              {{/each}}
+                                            {{/if}}     
+                                          </select>
+                                        </div>
+
+                                        <div class="form-group">
+                                          <label for="exampleFormControlSelect1">Author</label>
+                                          <select class="form-control text-center" id="exampleFormControlSelect1" name="user">
+                                            {{#if ../authors}}
+                                              {{#each ../authors}}
+                                                <option value="{{this._id}}">{{this.author}}</option>
+                                              {{/each}}
+                                            {{/if}}  
+                                          </select>
+                                        </div>
+
+                                        <div class="custom-file">
+                                          <input type="file" class="custom-file-input" id="cover" name="cover" value="{{this.cover}}">
+                                          <label class="custom-file-label" for="cover">Choose Image</label>
+                                        </div>
+
+
+
+                                      </div>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                      <i class="far fa-times-circle category_fa_icon"></i>
+                                    </button>
+                                    <button type="submit" class="btn btn-primary">
+                                      <i class="far fa-check-circle category_fa_icon"></i>
+                                    </button>
+                                  </div>
+                                </form>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <form method="GET" action="/admin/books/{{this._id}}" class="d-inline" enctype="multipart/form-data">
+                          <button type="submit" class="btn btn-danger actions_buttons_table_delete">
+                            <i class="far fa-trash-alt "></i>
+                          </button>
+                        </form>
+                        </div>
+                      </td>
+                    </tr>
+                  {{/each}}
+                {{/if}}
+              </tbody>
+            </table>
+          </div>
+
+
+          <!-- authors -->
+          <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
+
+
+
+            <button type="button" class="btn categories_add_button" data-toggle="modal" data-target="#exampleModal4"
+              data-whatever="@mdo">
+              <i class="fas fa-plus-circle"></i>
+            </button>
+
+            <div class="modal fade text-center" id="exampleModal4" tabindex="-1" role="dialog"
+              aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add Author</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <form method="POST" action="/admin/authors" enctype="multipart/form-data">
+                    <div class="modal-body">
+                        <div class="form-group">
+                          
+                          <label for="recipient-name" class="col-form-label">
+                            <i class="far fa-user-circle"></i>
+                          </label>
+
+                          <input type="text" class="form-control" id="recipient-name" placeholder="First name" name="author">
+
+                          
+
+
+                          <label for="recipient-name" class="col-form-label">
+                            <i class="fas fa-image"></i>
+                          </label>
+              
+                          
+
+                        </div>
+                         <div class="form-group">
+                          <label for="recipient-dob" class="col-form-label">
+                            <i class="far fa-calendar-alt"></i>
+                          </label>
+                          <input type="date" class="form-control" id="recipient-dob" name="dob" required>
+                          <small id="dobHelp" class="form-text text-muted">Date of birth must be before than the year 2000.</small>
+
+                        </div>
+                          <div class="form-group">
+                          <label for="recipient-pic" class="col-form-label">
+                            <i class="fas fa-image"></i>
+                          </label>
+                          <input type="file" class="form-control" id="recipient-pic" name="pic" required>
+                        </div>
+                        
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        <i class="far fa-times-circle category_fa_icon"></i>
+                      </button>
+                      <button type="summit" class="btn btn-primary">
+                        <i class="far fa-check-circle category_fa_icon"></i>
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+
+            <!--Authors Table-->
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th scope="col">Author Name</th>
+                  <th scope="col">DOB</th>
+                  <th scope="col">PIC</th>
+                  <th scope="col">Actions</th>
+
+                </tr>
+              </thead>
+              <tbody>
+                {{#if authors}}
+                  {{#each authors}}
+                    <tr>
+                      <td>{{this.author}}</td>
+                      <td><img src="../uploads/{{this.pic}}" alt="{{this.pic}}" style="width: auto; height: 100px;"></td>
+                      <td>{{this.dob}}</td>
+                      <td>
+                        <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                            <button type="button" class="btn btn-primary categories_add_button" data-toggle="modal" data-target="#exampleModal{{this._id}}"
+                              data-whatever="@mdo">
+                              <i class="fas fa-edit "></i>
+                            </button>
+
+                            <div class="modal fade text-center" id="exampleModal{{this._id}}" tabindex="-1" role="dialog"
+                              aria-labelledby="exampleModalLabel" aria-hidden="true">
+                              <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Edit Author</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                    <form method="POST" action="/admin/authors/{{this._id}}" class="d-inline" enctype="multipart/form-data">
+                                        <div class="modal-body">
+                                            <div class="form-group">
+                                                <label for="recipient-name" class="col-form-label">
+                                                  <i class="far fa-list-alt category_fa_icon"></i>
+                                                </label>
+
+                                                <input type="text" class="form-control" id="recipient-name" placeholder="Category name" name="author" value="{{this.author}}">
+                                                
+                                                
+
+                                                
+                                    
+                                                
+                                            </div>
+                                            <div class="form-group">
+                                              <label for="recipient-dob" class="col-form-label">
+                                                Date of Birth
+                                                <i class="far fa-list-alt category_fa_icon"></i>
+                                              </label>
+                                              <input type="date" class="form-control" id="recipient-dob" name="dob" value="{{this.dob}}">
+                                            </div>
+                                             <div class="form-group">
+                                              <label for="recipient-pic" class="col-form-label">
+                                                Picture
+                                                <i class="far fa-list-alt category_fa_icon"></i>
+                                              </label>
+                                              <input type="file" class="form-control" id="recipient-pic" name="pic">
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                          <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                            <i class="far fa-times-circle category_fa_icon"></i>
+                                          </button>
+                                          <button type="submit" class="btn btn-primary">
+                                            <i class="far fa-check-circle category_fa_icon"></i>
+                                          </button>
+                                        </div>
+                                    </form>
+                                </div>
+                              </div>
+                            </div>
+                        <form method="GET" action="/admin/authors/{{this._id}}" class="d-inline" enctype="multipart/form-data">
+                          <button type="submit" class="btn btn-danger actions_buttons_table_delete">
+                            <i class="far fa-trash-alt "></i>
+                          </button>
+                        </form>
+                      </td>
+                    </tr>
+                  {{/each}}
+                {{/if}}     
+              </tbody>
+            </table>
+
+          </div>
+
+
+        </div>
+
+
+      </div>
+
+      <div class="col-1"></div>
+      
+    </div>
+
+  
+
+
+</body>
+
+</html>

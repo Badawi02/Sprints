@@ -1,0 +1,99 @@
+  
+      </div>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript">
+        $(document).ready(function () {
+            $('#suggestion_form').keyup(function () {
+                $form = $(this)
+                var formData = new FormData(this);
+                var text=$("#suggestion").val()
+                var query = $(this).val();
+                $.ajax({
+                    url: "/books/search?word="+text,
+                    type: 'GET',
+                    
+                    success: function (data) {
+                        console.log("SUCCESS");
+                        
+                        $("#searchbox").css("display", "block");
+                        $("#searchbox").empty()
+                        for (i in data["book"]) {
+                            $('#searchbox').append('<li class="list-group-item" ><a id="' +
+                                i + '" href="/books/' + data["book"][i]._id+'">' + data["book"][i].name + '</a></li>');
+                            $('#' + i + '').click();
+                        }
+                    },
+                    failure: function (data) {
+                        console.log("FAIL");
+                        console.log(data);
+                    },
+                    cache: false,
+                    contentType: false,
+                    processData: false
+                });
+            });
+        });
+    </script>
+    
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.css">
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.js"></script>
+<script>
+    
+jQuery(document).ready(function ($) {
+  
+    $("#rate").rateYo({
+        
+        onInit: function ( rateYoInstance) {
+      console.log("RateYo initialized! with " +$('#rater').val());
+        },
+      starWidth: "40px",
+      ratedFill: "#E74C3C",
+      rating: $('#rater').val(),
+    halfStar: true,
+    onSet: function (rating, rateYoInstance) { 
+ $.ajax({
+            headers: { "X-CSRFToken": '{{csrf_token}}' },
+            url: window.location.pathname+"/rate/"+rating,
+            type: 'POST',
+            data:rating,
+            success: function (response) {
+                $('.error').remove();
+                console.log(response)
+                if(response.error){
+                    console.log("somthig went wrong")
+                }
+                else{
+                    console.log(response.message)
+                    window.location = ""
+                }
+            },
+            cache: false,
+            contentType: false,
+            processData: false
+        });
+}
+    });
+   
+  });
+</script>
+<script>
+       jQuery('#languageselector').on('change', function(){      
+        jQuery.ajax({
+          url: window.location.pathname+"/addstatus/"+$(this).val(),
+          method: 'get',
+         
+          success: function(result){
+             jQuery('.alert').show();
+             jQuery('.alert').html(result.success);
+          }
+        });
+
+    });
+  </script>
+
+
+
+</body>
+</html>

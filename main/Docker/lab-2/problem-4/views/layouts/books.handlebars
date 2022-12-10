@@ -1,0 +1,205 @@
+{{> header}}
+
+        <div class="row">
+          <div class="col-3">
+            <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+              <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true"><i class="fas fa-align-justify"></i> All</a>
+              <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false"><i class="fas fa-check-square"></i> Read</a>
+              <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false"> <i class="fas fa-clock"></i> Currently Reading</a>
+              <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false"> <i class="fas fa-grin-hearts"></i> Want to read</a>
+            </div>
+          </div>
+
+          <div class="col-9">
+            
+            <div class="tab-content" id="v-pills-tabContent">
+              <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+                <h3>All</h3>
+                <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th scope="col">Cover</th>
+                      <th scope="col">Name</th>
+                      <th scope="col">Author</th>
+                      <th scope="col">Category</th>
+                      <th scope="col">Rating</th>
+                      <th scope="col">Shelve</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {{#books}}
+                    <tr>
+                      <th scope="row"><img src="../uploads/{{this.cover}}"></th>
+                      <td><a href="/books/{{id}}">{{name}}</a></td>
+                      <td><a href="/authors/{{user.author.id}}">{{user.author}}</a></td>
+                       <td><a href="/categories/{{category.category.id}}">{{category.category}}</a></td>
+                    <td>{{divide rate raters}}</td>
+                   {{#contains ../booksIds id}}
+                   {{#each ../state}}
+                   {{#compare this.book.id "==" ../id}} 
+           <td>{{this.status}}</td>
+           {{/compare}}
+             {{/each}}
+           {{else}}
+           <td>never readed</td> 
+{{/contains}}
+                    </tr>
+                        
+                    {{/books}}
+                  </tbody>
+                </table>
+
+              </div>
+                <div class="tab-pane fade show" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+                <h3>Finished Reading</h3>
+
+                <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th scope="col">Cover</th>
+                      <th scope="col">Name</th>
+                      <th scope="col">Author</th>
+                      <th scope="col">Category</th>
+                      <th scope="col">Rating</th>
+                      <th scope="col">Shelve</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+
+                    {{#books}}
+                    <tr>
+                           {{#contains ../booksIds id}}
+                   {{#each ../state}}
+                      
+                   {{#compare this.book.id "==" ../id}} 
+                    {{#if ( compare this.status "==" "finished reading" )}}
+                <th scope="row"><img src="../uploads/{{../cover}}"></th>
+                      <td><a href="/books/{{../id}}">{{../name}}</a></td>
+                      
+                      <td><a href="/authors/{{../user.author.id}}">{{../user.author}}</a></td>
+                       <td><a href="/categories/{{../category.category.id}}">{{../category.category}}</a></td>
+                       
+                    <td>{{divide ../rate ../raters}}</td>
+           <td>{{this.status}}</td>
+           {{/if}}
+           {{/compare}}
+             {{/each}}
+{{/contains}}
+                 
+                    </tr>
+                        
+                    {{/books}}
+                  </tbody>
+                </table>
+
+              </div>
+                <div class="tab-pane fade show" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
+                <h3>Currently Reading</h3>
+
+                <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th scope="col">Cover</th>
+                      <th scope="col">Name</th>
+                      <th scope="col">Author</th>
+                      <th scope="col">Category</th>
+                      <th scope="col">Rating</th>
+                      <th scope="col">Shelve</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+
+                    {{#books}}
+                    <tr>
+                      {{#contains ../booksIds id}}
+                   {{#each ../state}}
+                      
+                   {{#compare this.book.id "==" ../id}} 
+                    {{#if ( compare this.status "==" "reading" )}}
+                <th scope="row"><img src="../uploads/{{../cover}}"></th>
+                      <td><a href="/books/{{../id}}">{{../name}}</a></td>
+                      
+                      <td><a href="/authors/{{../user.author.id}}">{{../user.author}}</a></td>
+                       <td><a href="/categories/{{../category.category.id}}">{{../category.category}}</a></td>
+                       
+                    <td>{{divide ../rate ../raters}}</td>
+           <td>{{this.status}}</td>
+           {{/if}}
+           {{/compare}}
+             {{/each}}
+{{/contains}}
+                 
+                    </tr>
+                        
+                    {{/books}}
+                  </tbody>
+                </table>
+
+              </div>
+               <div class="tab-pane fade show" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
+                <h3>Want to read</h3>
+                <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th scope="col">Cover</th>
+                      <th scope="col">Name</th>
+                      <th scope="col">Author</th>
+                      <th scope="col">Category</th>
+                      <th scope="col">Rating</th>
+                      <th scope="col">Shelve</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {{#books}}
+                    <tr>
+                      {{#contains ../booksIds id}}
+                   {{#each ../state}}
+                   {{#compare this.book.id "==" ../id}} 
+                    {{#if ( compare this.status "==" "want to read" )}}
+                <th scope="row"><img src="../uploads/{{../cover}}"></th>
+                     <td><a href="/books/{{../id}}">{{../name}}</a></td>
+                      <td><a href="/authors/{{../user.author.id}}">{{../user.author}}</a></td>
+                       <td><a href="/categories/{{../category.category.id}}">{{../category.category}}</a></td>
+                    <td>{{divide ../rate ../raters}}</td>
+           <td>{{this.status}}</td>
+           {{/if}}
+           {{/compare}}
+             {{/each}}
+{{/contains}}
+                    </tr> 
+                    {{/books}}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+              <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">Read</div>
+              <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">Currently Reading</div>
+              <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">Want to read</div>
+            </div>
+          </div>
+          </div>
+        </div>
+        <div class="row text-center">
+          <div class="col-5"></div>
+          <div class="col-2">
+            <nav aria-label="Page navigation example">
+              <ul class="pagination">
+                {{#times pageCount}}
+                {{#eq ../page  this}}
+                <li class="page-item active"><a class="page-link" href="/books?p={{this}}">{{this}}</a></li>
+                {{else}}
+                <li class="page-item"><a class="page-link" href="/books?p={{this}}">{{this}}</a></li>
+                {{/eq}}
+                {{/times}}
+              </ul>
+            </nav>
+          </div>
+          <div class="col-4"></div>
+        </div>
+        <style>
+          img{
+            width: 50px;
+            height: 50px;
+          }
+        </style>
+{{> footer}}

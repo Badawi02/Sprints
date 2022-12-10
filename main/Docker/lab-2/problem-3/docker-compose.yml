@@ -1,0 +1,28 @@
+version: '3.7'
+
+services:
+  web-server:
+    image: nginx:alpine
+    ports:
+      - "8000:80"
+    restart: always
+  
+  database:
+    image: mysql:latest
+    volumes:
+      - type: volume
+        source: mysql-db
+        target: /app
+    restart: always
+  
+  web-app:
+    build: .
+    ports:
+      - "5000:5000"
+    depends_on:
+      - "database"
+      - "web-server"
+    restart: always
+
+volumes:
+  mysql-db:

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="stylesheets/style.css">
+
+  <!--bootstrap Libraries-->
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
+  </script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
+  </script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+    integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous">
+  </script>
+  <!--Font Awesome-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js"></script>
+  <!--Google Fonts-->
+  <link href="https://fonts.googleapis.com/css2?family=Julius+Sans+One&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+  <title>Admin</title>
+
+</head>
+
+<body>
+
+  <div class="container-fluid">
+    <div class="row text-center">
+      <div class="col-4"></div>
+
+      <div class="col-4 admin_login_container">
+        <h3 class="admin_login_title">
+          <i class="fas fa-bolt"></i>
+          Welcome to Admin Panel
+        </h3>
+
+        <form method="POST" action="/admin">
+          <div class="input-group admin_login_form_row">
+            <div class="input-group-prepend">
+              <div class="input-group-text">
+                <i class="fas fa-at"></i>
+              </div>
+            </div>
+            <input type="email" class="form-control admin_login_email_form" placeholder="Enter your email address"
+              name="email">
+          </div>
+
+          <div class="input-group admin_login_form_row">
+            <div class="input-group-prepend">
+              <div class="input-group-text">
+                <i class="fas fa-key"></i>
+              </div>
+            </div>
+            <input type="password" class="form-control admin_login_password_form" placeholder="Enter your password"
+              name="password">
+          </div>
+
+          <button type="submit" class="btn admin_login_submit_button admin_login_form_row">
+            <i class="far fa-check-circle font_awesome_check_circle"></i> Submit
+          </button>
+        </form>
+
+        <div class="col-4"> </div>
+
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        {{#locals.err}}
+          {{{this}}}
+        {{/locals.err}}
+      </div>
+    </div>
+  </div>
+
+</body>
+
+</html>

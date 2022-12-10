@@ -1,0 +1,120 @@
+{{> header}}
+<div class="row">
+    <div class="col-1"></div>
+    <div class="col-11">
+
+        <div class="card mb-3" style="max-width: 540px;">
+            <div class="row no-gutters">
+              <div class="col-md-4">
+                <img src="../uploads/{{book.cover}}" class="card-img" alt="...">
+                <form id="myForm">
+                <div class="button dropdown">
+                <select class="form-control" id="languageselector">
+                  {{#eq state.status "want to read"}}
+                    <option value="want to read" selected>Want to read</option>
+                    <option value="reading">Already Reading</option>
+                    <option value="finished reading">finished Read</option>
+                    {{/eq}}
+                     {{#eq state.status "reading"}}
+                    <option value="want to read" >Want to read</option>
+                    <option value="reading" selected>Already Reading</option>
+                    <option value="finished reading">finished Read</option>
+                    {{/eq}}
+                    {{#eq state.status "finished reading"}}
+                    <option value="want to read" >Want to read</option>
+                    <option value="reading" >Already Reading</option>
+                    <option value="finished reading" selected>finished Read</option>
+                    {{/eq}}
+                    {{#if state.status}}
+                    {{else}}
+                    <option value="want to read" >Want to read</option>
+                    <option value="reading" >Already Reading</option>
+                    <option value="finished reading" >finished Read</option>
+                    {{/if}}
+                </select>
+                </div>
+          </form>
+              </div>
+             
+              <div class="col-md-8">
+                <div class="card-body">
+                  <h4 class="card-title">{{book.name}}</h4>
+                  <h5>By{{book.user.author}}</h5>
+                  <h5>Category {{book.category.category}}</h5>
+                </div>
+              </div>
+              <input type="hidden" value="{{stars}}" id="stars" ></div>
+                       <div id="rateYo" ></div>
+
+            </div>                       
+                       <div id="rate"></div>
+
+          </div>
+
+
+
+    </div>
+</div>
+
+<!--Reviews-->
+
+<div class="row">
+    <div class="col-1"></div>
+    <div class="col-10">
+        <nav>
+            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+              <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Reviews</a>
+            </div>
+          </nav>
+          <div class="tab-content" id="nav-tabContent">
+            <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+         {{#reviews}}
+                <div class="list-group">
+                    <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+                      <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1">{{this.user.firstName}} {{this.user.lastName}}</h5>
+                      </div>
+                      <p class="mb-1">{{this.review}}</p>
+                    </a>
+            {{/reviews}}   
+            <form method="POST" action="/books/review/">
+             <div class="form-group">
+               <input type="hidden" name="book" value="{{book._id}}"
+    <label for="exampleInputtext">review</label>
+    <input type="text" class="form-control" id="exampleInputtext" aria-describedby="emailHelp" placeholder="Enter review" name="review">
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </div>
+            </form>   
+                  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            </div>
+          </div>
+    </div>
+    <div class="col-1"></div>
+<script>
+  $( document ).ready(function() {
+  $(function () {
+ var stars=$("#stars").val()
+  $("#rateYo").rateYo({
+    maxValue: 5,
+    readOnly: true,
+     rating:stars
+  });
+});
+});
+</script>
+
+{{> footer}}

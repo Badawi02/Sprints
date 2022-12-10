@@ -1,0 +1,44 @@
+{{> header}}
+
+<div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+                <h3>All</h3>
+                <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th scope="col">Name</th>
+                      
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {{#categories}}
+                    <tr>
+                      <td><a href="/categories/books/{{id}}">{{category}}</a></td>
+                      
+                    </tr>
+                        
+                    {{/categories}}
+                  </tbody>
+                </table>
+
+              </div>
+                <div class="row ">
+      <div class="col-4"></div>
+      <div class="col-4">
+
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                {{#times pageCount}}
+                {{#eq ../page  this}}
+                <li class="page-item active"><a class="page-link" href="?p={{this}}">{{this}}</a></li>
+                {{else}}
+                <li class="page-item"><a class="page-link" href="?p={{this}}">{{this}}</a></li>
+                {{/eq}}
+                {{/times}}
+              </ul>
+        </nav>
+
+
+      </div>
+      <div class="col-4"></div>
+    </div>
+              {{> footer}}
