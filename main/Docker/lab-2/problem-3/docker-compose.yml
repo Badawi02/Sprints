@@ -5,6 +5,8 @@ services:
     image: nginx:alpine
     ports:
       - "8000:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
     restart: always
   
   database:
@@ -17,11 +19,11 @@ services:
   
   web-app:
     build: .
-    ports:
-      - "5000:5000"
     depends_on:
       - "database"
       - "web-server"
+    ports:
+      - "5000"
     restart: always
 
 volumes:
