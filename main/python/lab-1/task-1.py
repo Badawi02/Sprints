@@ -29,4 +29,8 @@ def my_fun(str_input,postion_input,char_input) :
     new_string = "".join(list_string)
     return print(f"Your new string is : {new_string}")
 
+<<<<<<< HEAD
 my_fun(mystring,mypostion,mychar)
+=======
+my_fun(mystring,mypostion,mychar)
+>>>>>>> 32272aab88357d36d67510d464091cf8e0acfa31
