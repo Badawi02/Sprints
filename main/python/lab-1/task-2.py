@@ -9,10 +9,18 @@ while True :
         continue
 
 def myfun (my_year) :
-
-    if (my_year % 4 == 0 and my_year % 4 == 0) or (my_year % 4 == 0 and my_year % 4 != 0) :
-        return ( print("True") )
+    leap = False
+    
+    if (my_year % 4 == 0 ) :
+        leap = True
+        if (my_year % 100 == 0 ) :
+            leap = False
+        if (my_year % 400 == 0 ) :
+            leap = True
     else:
-        return( print("False") )
+        leap = False
+        
+    return leap
+
 
 myfun(year)
